@@ -10,13 +10,7 @@ class Header extends Component {
 
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                     <Navbar.Brand href="#home">
-                        <img
-                            src={Logo}
-                            width="30"
-                            height="30"
-                            className="d-inline-block align-top"
-                            alt="React Bootstrap logo"
-                        />
+                     <h1>Map Explore</h1>
                     </Navbar.Brand>
                     <Container>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
