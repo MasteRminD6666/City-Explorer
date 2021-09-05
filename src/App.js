@@ -5,7 +5,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import  '../src/App.css';
 import axios from "axios";
 import Body from "./Components/body";
-import Error from "./Components/error"
+import Error from "./Components/error";
+import { AxiosResponse, AxiosError } from 'axios';
+
 
 class App extends Component{
   constructor(props){
