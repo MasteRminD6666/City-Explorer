@@ -7,7 +7,10 @@
 .form-inline {
   width: 100%;
 }
-
+.form-center{
+  align-items: center;
+  background-color: #282c34;
+}
 .form-group {
   width: 90%;
 }
