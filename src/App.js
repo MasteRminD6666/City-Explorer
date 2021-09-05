@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import  '../src/App.css';
 import axios from "axios";
 import Body from "./Components/body";
+import Error from "./Components/error"
 
 class App extends Component{
   constructor(props){
@@ -14,32 +15,51 @@ class App extends Component{
       lon:'',
       cityName:'',
       showBody: false,
-      imageSrc: ''
+      imageSrc: '',
+      displayErr: false,
+      errormsg:''
       
     }
   }
+  
   getMapLocation= async (event) => {
-  event.preventDefault()
+  
+ 
+    event.preventDefault()
   
   const cityName= event.target.cityName.value ;
   const Key= `pk.2cae4dc102199ef3d69e64cbe4bca40a`;
   const url= `https://us1.locationiq.com/v1/search.php?key=${Key}&q=${cityName}&format=json`;
+
+  try{
+    const selectedCity = await axios.get(url).catch((error) => {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      }
+      this.setState({
+        displayErr:true,
+        showBody:false,
+        errormsg: error.response.status
+      })
+   
+    });
+    this.setState({
+      lat: selectedCity.data[0].lat,
+      lon: selectedCity.data[0].lon,
+      cityName: selectedCity.data[0].display_name,
+      showBody:true,
+      
+      
+    })
+  }
+
+  catch{
+    
+ 
+  }
   
-  const selectedCity = await axios.get(url);
-  this.setState({
-    lat: selectedCity.data[0].lat,
-    lon: selectedCity.data[0].lon,
-    cityName: selectedCity.data[0].display_name,
-    showBody:true,
-    
-    
-  })
- 
-  const imgSrc = `https://maps.locationiq.com/v3/staticmap?key=${Key}&center=${this.state.lat},${this.state.lon}`
- 
-  console.log(imgSrc);
-
-
   }
   render(){
     return(
@@ -59,6 +79,8 @@ class App extends Component{
       </Body>
      
     }
+    {this.state.displayErr&& 
+    <Error errormsg={this.state.errormsg}></Error>}
   
     </>
     )
