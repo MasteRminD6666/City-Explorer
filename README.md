@@ -20,12 +20,12 @@ cat> .gitignore
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 
 
-Name of feature: ________________________________
+Name of feature: City-Map-Explore 
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 3 hours
 
-Start time: _____
+Start time: 1:30
 
-Finish time: _____
+Finish time: 4:30
 
 Actual time needed to complete: _____
