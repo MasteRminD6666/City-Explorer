@@ -19,7 +19,10 @@ class App extends Component{
       showBody: false,
       imageSrc: '',
       displayErr: false,
-      errormsg:''
+      errormsg:'',
+      description:'',
+      date:'',
+      wind:'',
       
     }
   }
@@ -55,6 +58,23 @@ class App extends Component{
       
       
     })
+ 
+    const herokuUrl = `https://city-explorer-api-bk201.herokuapp.com/weather?cityName=${cityName}`
+    const  cityInfo = await axios.get(herokuUrl).catch((error)=>{
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      }
+   
+    })
+    this.setState({
+      description: cityInfo.data[0],
+      date: cityInfo.data[1],
+      wind:cityInfo.data[2],
+      
+    })
+    console.log(cityInfo.data[0],cityInfo.data[1],cityInfo.data[2]);
   }
 
   catch{
@@ -74,7 +94,9 @@ class App extends Component{
       lat={this.state.lat} 
       lon= {this.state.lon}
       cityName= {this.state.cityName}
-      
+      description={this.state.description}
+      date={this.state.date}
+      wind={this.state.wind}
       
       >
       
