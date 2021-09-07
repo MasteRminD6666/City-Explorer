@@ -8,7 +8,10 @@ import Body from "./Components/body";
 import Error from "./Components/error";
 import { AxiosResponse, AxiosError } from 'axios';
 
+import Card from 'react-bootstrap/Card';
 
+let weatherKey = process.env.REACT_APP_weatherKey
+let moviesKey = process.env.REACT_APP_moviesKey
 class App extends Component {
   constructor(props) {
     super(props)
@@ -20,16 +23,8 @@ class App extends Component {
       imageSrc: '',
       displayErr: false,
       errormsg: '',
-      firstDayDate: '',
-      firstDayWeather: '',
-      firstDayWind: '',
-      secondDayDate: '',
-      secondDayWeather: '',
-      secondDayWind: '',
-      thirdDayDate: '',
-      thirdDayWeather: '',
-      thirdDayWind: '',
-    }
+      weatherDataInof:[],
+        }
   }
 
   getMapLocation = async (event) => {
@@ -40,7 +35,8 @@ class App extends Component {
     const cityName = event.target.cityName.value;
     const Key = `pk.2cae4dc102199ef3d69e64cbe4bca40a`;
     const url = `https://us1.locationiq.com/v1/search.php?key=${Key}&q=${cityName}&format=json`;
-
+    const weatherUrl = `https://city-explorer-api-bk201.herokuapp.com/weather?key=${moviesKey}`;
+    
     try {
       const selectedCity = await axios.get(url).catch((error) => {
         if (error.response) {
@@ -63,30 +59,13 @@ class App extends Component {
 
 
       })
-      const herokuUrl = `https://city-explorer-api-bk201.herokuapp.com/weather?cityName=${cityName}`
-      const cityInfo = await axios.get(herokuUrl).catch((error) => {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      })
-
-      // one hunder precent sure that we should loop instead of doing it like this 
-      this.setState({
-        firstDayDate: cityInfo.data[0].date,
-        firstDayWeather: cityInfo.data[0].description,
-        firstDayWind: cityInfo.data[0].wind,
-        secondDayDate: cityInfo.data[1].date,
-        secondDayWeather: cityInfo.data[1].description,
-        secondDayWind: cityInfo.data[1].wind,
-        thirdDayDate: cityInfo.data[2].date,
-        thirdDayWeather: cityInfo.data[2].description,
-        thirdDayWind: cityInfo.data[2].wind,
-
-      })
-
-
+     
+      const weatherDataInof= await axios.get(weatherUrl)
+     this.setState({
+       weatherDataInof:weatherDataInof.data.data
+     })
+     console.log(this.state.weatherDataInof);
+ 
     }
 
 
@@ -95,8 +74,9 @@ class App extends Component {
 
     }
 
-    console.log(this.state.firstDayDate, this.state.firstDayWeather, this.state.firstDayWind);
+    
   }
+  // const moivesUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=${moviesKey}`;
   render() {
     return (
       <>
@@ -109,16 +89,8 @@ class App extends Component {
             lon={this.state.lon}
             cityName={this.state.cityName}
             description={this.state.description}
-            firstDayDate={this.state.firstDayDate}
-            firstDayWeather={this.state.firstDayWeather}
-            firstDayWind={this.state.firstDayWind}
-            secondDayDate={this.state.secondDayDate}
-            secondDayWeather={this.state.secondDayWeather}
-            secondDayWind={this.state.secondDayWind}
-            thirdDayDate={this.state.thirdDayDate}
-            thirdDayWeather={this.state.thirdDayWeather}
-            thirdDayWind={this.state.thirdDayWind}
-
+            
+            weatherDataInof={this.state.weatherDataInof}
           >
 
           </Body>
@@ -126,6 +98,8 @@ class App extends Component {
         }
         {this.state.displayErr &&
           <Error errormsg={this.state.errormsg}></Error>}
+
+          
 
       </>
     )
