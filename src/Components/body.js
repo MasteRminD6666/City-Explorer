@@ -25,11 +25,9 @@ class bodyClass extends Component {
                         </Card.Text>
 
                     </Card.ImgOverlay>
-                    {this.props.cityinformoation.map(element =>{
-                            
-                            return  <Card.Text style={{ color: 'black' }}>Day: {element.date} <br></br> Description: {element.description}<br></br> Wind: {element.wind}</Card.Text>
-                            
-                         })}
+                    {this.props.weatherDataInof.map(Element=>{
+                        return  <Card.Text style={{ color: 'white' }}>{Element.city_name} <br></br>{Element.datetime}{Element.description}</Card.Text>
+                    })}
                 
                 </Card>
 

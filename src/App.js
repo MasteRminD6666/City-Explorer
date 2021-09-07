@@ -10,7 +10,8 @@ import { AxiosResponse, AxiosError } from 'axios';
 
 import Card from 'react-bootstrap/Card';
 
-
+let weatherKey = process.env.REACT_APP_weatherKey
+let moviesKey = process.env.REACT_APP_moviesKey
 class App extends Component {
   constructor(props) {
     super(props)
@@ -22,8 +23,8 @@ class App extends Component {
       imageSrc: '',
       displayErr: false,
       errormsg: '',
-      cityinformoation:[],
-    }
+      weatherDataInof:[],
+        }
   }
 
   getMapLocation = async (event) => {
@@ -34,7 +35,8 @@ class App extends Component {
     const cityName = event.target.cityName.value;
     const Key = `pk.2cae4dc102199ef3d69e64cbe4bca40a`;
     const url = `https://us1.locationiq.com/v1/search.php?key=${Key}&q=${cityName}&format=json`;
-
+    const weatherUrl = `https://city-explorer-api-bk201.herokuapp.com/weather?key=${moviesKey}`;
+    
     try {
       const selectedCity = await axios.get(url).catch((error) => {
         if (error.response) {
@@ -57,22 +59,13 @@ class App extends Component {
 
 
       })
-      const herokuUrl = `https://city-explorer-api-bk201.herokuapp.com/weather?cityName=${cityName}`
-      const cityInfo = await axios.get(herokuUrl).catch((error) => {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      })
-
-      // one hunder precent sure that we should loop instead of doing it like this 
-      this.setState({
-        cityinformoation: cityInfo.data
-
-      })
-
-
+     
+      const weatherDataInof= await axios.get(weatherUrl)
+     this.setState({
+       weatherDataInof:weatherDataInof.data.data
+     })
+     console.log(this.state.weatherDataInof);
+ 
     }
 
 
@@ -83,6 +76,7 @@ class App extends Component {
 
     
   }
+  // const moivesUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=${moviesKey}`;
   render() {
     return (
       <>
@@ -95,8 +89,8 @@ class App extends Component {
             lon={this.state.lon}
             cityName={this.state.cityName}
             description={this.state.description}
-            cityinformoation={this.state.cityinformoation}
-
+            
+            weatherDataInof={this.state.weatherDataInof}
           >
 
           </Body>
