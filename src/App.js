@@ -8,6 +8,8 @@ import Body from "./Components/body";
 import Error from "./Components/error";
 import { AxiosResponse, AxiosError } from 'axios';
 
+import Card from 'react-bootstrap/Card';
+
 
 class App extends Component {
   constructor(props) {
@@ -20,15 +22,7 @@ class App extends Component {
       imageSrc: '',
       displayErr: false,
       errormsg: '',
-      firstDayDate: '',
-      firstDayWeather: '',
-      firstDayWind: '',
-      secondDayDate: '',
-      secondDayWeather: '',
-      secondDayWind: '',
-      thirdDayDate: '',
-      thirdDayWeather: '',
-      thirdDayWind: '',
+      cityinformoation:[],
     }
   }
 
@@ -74,15 +68,7 @@ class App extends Component {
 
       // one hunder precent sure that we should loop instead of doing it like this 
       this.setState({
-        firstDayDate: cityInfo.data[0].date,
-        firstDayWeather: cityInfo.data[0].description,
-        firstDayWind: cityInfo.data[0].wind,
-        secondDayDate: cityInfo.data[1].date,
-        secondDayWeather: cityInfo.data[1].description,
-        secondDayWind: cityInfo.data[1].wind,
-        thirdDayDate: cityInfo.data[2].date,
-        thirdDayWeather: cityInfo.data[2].description,
-        thirdDayWind: cityInfo.data[2].wind,
+        cityinformoation: cityInfo.data
 
       })
 
@@ -95,7 +81,7 @@ class App extends Component {
 
     }
 
-    console.log(this.state.firstDayDate, this.state.firstDayWeather, this.state.firstDayWind);
+    
   }
   render() {
     return (
@@ -109,15 +95,7 @@ class App extends Component {
             lon={this.state.lon}
             cityName={this.state.cityName}
             description={this.state.description}
-            firstDayDate={this.state.firstDayDate}
-            firstDayWeather={this.state.firstDayWeather}
-            firstDayWind={this.state.firstDayWind}
-            secondDayDate={this.state.secondDayDate}
-            secondDayWeather={this.state.secondDayWeather}
-            secondDayWind={this.state.secondDayWind}
-            thirdDayDate={this.state.thirdDayDate}
-            thirdDayWeather={this.state.thirdDayWeather}
-            thirdDayWind={this.state.thirdDayWind}
+            cityinformoation={this.state.cityinformoation}
 
           >
 
@@ -126,6 +104,8 @@ class App extends Component {
         }
         {this.state.displayErr &&
           <Error errormsg={this.state.errormsg}></Error>}
+
+          
 
       </>
     )
