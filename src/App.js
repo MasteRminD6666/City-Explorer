@@ -1,12 +1,15 @@
 import React, { Component } from "react";
-import Form from './Components/form';
-import Header from './Components/header';
+import Form from './Components/Forms/form';
+import Header from './Components/header/header';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../src/App.css';
+import './App.css';
 import axios from "axios";
-import Body from "./Components/body";
+import Body from "./Components/body/body";
 import Error from "./Components/error";
 import { AxiosResponse, AxiosError } from 'axios';
+import Movies from './Components/Moives';
+import {Row} from 'react-bootstrap';
+
 
 import Card from 'react-bootstrap/Card';
 
@@ -24,6 +27,7 @@ class App extends Component {
       displayErr: false,
       errormsg: '',
       weatherDataInof:[],
+      moivesArray:[],
         }
   }
 
@@ -35,7 +39,7 @@ class App extends Component {
     const cityName = event.target.cityName.value;
     const Key = `pk.2cae4dc102199ef3d69e64cbe4bca40a`;
     const url = `https://us1.locationiq.com/v1/search.php?key=${Key}&q=${cityName}&format=json`;
-    const weatherUrl = `https://city-explorer-api-bk201.herokuapp.com/weather?key=${moviesKey}`;
+    const weatherUrl = `https://city-explorer-api-bk201.herokuapp.com/weather?city=${cityName}`;
     
     try {
       const selectedCity = await axios.get(url).catch((error) => {
@@ -61,9 +65,9 @@ class App extends Component {
       })
      
       const weatherDataInof= await axios.get(weatherUrl)
-     this.setState({
-       weatherDataInof:weatherDataInof.data.data
-     })
+      this.setState({
+        weatherDataInof: weatherDataInof.data
+      })
      console.log(this.state.weatherDataInof);
  
     }
@@ -72,25 +76,41 @@ class App extends Component {
     catch {
 
 
-    }
-
-    
+    }    
+    const moivesUrl = `https://city-explorer-api-bk201.herokuapp.com/movies`;
+    axios
+    .get(moivesUrl)
+    .then((element) => {
+      this.setState({
+        moivesArray:element.data
+        
+      })
+      console.log(this.state.moivesArray);
+    })
+    console.log('hellooo');
   }
+
   // const moivesUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=${moviesKey}`;
   render() {
     return (
       <>
 
         <Header></Header>
-        <Form getMapLocation={this.getMapLocation} ></Form>
+        <Form 
+        getMapLocation={this.getMapLocation}
+        getMoives={this.getMoives}
+        >
+
+        </Form>
+        <Row className="d-flex justify-content-between">
         {this.state.showBody &&
           <Body
             lat={this.state.lat}
             lon={this.state.lon}
             cityName={this.state.cityName}
             description={this.state.description}
-            
             weatherDataInof={this.state.weatherDataInof}
+            getMoives={this.getMoives}
           >
 
           </Body>
@@ -98,8 +118,17 @@ class App extends Component {
         }
         {this.state.displayErr &&
           <Error errormsg={this.state.errormsg}></Error>}
-
           
+        
+        {
+          this.state.moivesArray.map(item => {
+            const movieImage = `http://image.tmdb.org/t/p/w500/${item.image_url}`
+           return <Movies item ={item} movieImage={movieImage}  ></Movies>
+            
+          })
+        }
+         </Row>
+      
 
       </>
     )
