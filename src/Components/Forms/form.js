@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
+import './froms.scss'
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,18 +16,19 @@ class FormClass extends Component {
         return (
             <>  
             <br></br>
-            <Form className="form-center" onSubmit={this.props.getMapLocation}>
+            <Form style={{  display: "inline-block", textAlign:"center"}} className="form-center" onSubmit={this.props.getMapLocation}>
   <Row className="align-items-center">
     <Col sm={3} className="my-1">
   
-      <InputGroup>
+   
         
-        <FormControl id="cityName" placeholder="Enter The City Name " />
-      </InputGroup>
+        <FormControl style= {{width: '200px'}} id="cityName" placeholder="Enter The City Name " />
+
     </Col>
     <Col xs="auto" className="my-1">
    
-      <Button variant="outline-primary" type="submit">Explore</Button>
+      <Button style= {{marginLeft: '100px'}} variant="outline-primary" type="submit">Explore</Button>
+  
     </Col>
   </Row>
 </Form>

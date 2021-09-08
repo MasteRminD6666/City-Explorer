@@ -1,17 +1,22 @@
 
 import React, { Component } from "react";
 import { Navbar, Container, Nav } from 'react-bootstrap';
-import Logo from '../asserts/img/Logo.png'
+
+import './header.scss'
 
 class Header extends Component {
     render() {
         return (
             <>
 
-                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                    <Navbar.Brand href="#home">
-                     <h1>Map Explore</h1>
-                    </Navbar.Brand>
+                <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+                    
+                        <img 
+                            src="https://1000logos.net/wp-content/uploads/2017/03/Metallica-Logo-500x313.png"
+                      
+                        />
+
+                
                     <Container>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
