@@ -2,16 +2,6 @@
 
  rami Zaitoun 
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
-
-Name of feature: ________________________________
-
-Estimate of time needed to complete: _____
-
-Start time: _____
-
-Finish time: _____
-
-Actual time needed to complete: _____
 ## Overview
 this website takes any city and gives you the location of it and the top reated movies using locationiq Api to get the location of any city or country you want 
 
